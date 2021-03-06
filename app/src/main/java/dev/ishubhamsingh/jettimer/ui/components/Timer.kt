@@ -175,7 +175,7 @@ fun TimerInputScreen() {
         Divider()
         Spacer(modifier = Modifier.height(50.dp))
         NumPad()
-        Spacer(modifier = Modifier.height(30.dp))
+        Spacer(modifier = Modifier.height(25.dp))
         TimerButton()
     }
 }
@@ -225,6 +225,8 @@ fun TimerRunningScreen() {
     Column(horizontalAlignment = Alignment.CenterHorizontally) {
         TimerProgress()
         Spacer(modifier = Modifier.height(30.dp))
+        Divider()
+        Spacer(modifier = Modifier.height(50.dp))
         TimerRunningActions()
     }
 }
