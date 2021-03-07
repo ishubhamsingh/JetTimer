@@ -37,6 +37,12 @@ class TimerViewModel: ViewModel() {
     private var _timerSec: MutableLiveData<String> = MutableLiveData("00")
     var timerSec: LiveData<String> = _timerSec
 
+    private var _isTimerFinished: MutableLiveData<Boolean> = MutableLiveData(false)
+    var isTimerFinished = _isTimerFinished
+
+    private var _timerValue: MutableLiveData<String> = MutableLiveData("00 : 00 : 00")
+    var timerValue = _timerValue
+
     private lateinit var timer: CountDownTimer
 
     fun setTimerValue(value: Int) {
@@ -86,10 +92,13 @@ class TimerViewModel: ViewModel() {
             }
 
             override fun onFinish() {
-                println("Finished")
-                resetTimerValues() //TODO do something cool to notify
+                _isTimerFinished.value = true
             }
         }
+
+        _timerValue.value = String.format("%02d : %02d : %02d", TimeUnit.MILLISECONDS.toHours(getTimeInMillis()), TimeUnit.MILLISECONDS.toMinutes(getTimeInMillis()) -
+                TimeUnit.HOURS.toMinutes(TimeUnit.MILLISECONDS.toHours(getTimeInMillis())), TimeUnit.MILLISECONDS.toSeconds(getTimeInMillis()) -
+                TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(getTimeInMillis())))
     }
 
     fun updateTimerValues(millis: Long) {
@@ -113,6 +122,8 @@ class TimerViewModel: ViewModel() {
     }
 
     fun resetTimerValues() {
+        _isTimerFinished.value = false
+        _timerValue.value = "00 : 00 : 00"
         inputArray = arrayOf(0,0,0,0,0,0)
         arrayPointer = -1
         _isTimerRunning.value = false

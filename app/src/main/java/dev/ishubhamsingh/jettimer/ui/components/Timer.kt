@@ -42,6 +42,7 @@ import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.PlayArrow
+import androidx.compose.material.icons.filled.Refresh
 import androidx.compose.material.icons.filled.Stop
 import androidx.compose.material.icons.outlined.Backspace
 import androidx.compose.material.icons.outlined.PlayCircle
@@ -311,13 +312,21 @@ fun TimerRunningActions(timerViewModel: TimerViewModel = viewModel()) {
 
 @ExperimentalAnimationApi
 @Composable
-fun TimerRunningScreen() {
-    Column(horizontalAlignment = Alignment.CenterHorizontally) {
-        TimerProgress()
-        Spacer(modifier = Modifier.height(30.dp))
-        Divider()
-        Spacer(modifier = Modifier.height(50.dp))
-        TimerRunningActions()
+fun TimerRunningScreen(timerViewModel: TimerViewModel = viewModel()) {
+    val isTimerFinished: Boolean by timerViewModel.isTimerFinished.observeAsState(initial = false)
+    Crossfade(targetState = isTimerFinished) { timerFinishStatus ->
+        when(timerFinishStatus) {
+            true -> TimerFinishScreen()
+            false -> {
+                Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                    TimerProgress()
+                    Spacer(modifier = Modifier.height(30.dp))
+                    Divider()
+                    Spacer(modifier = Modifier.height(50.dp))
+                    TimerRunningActions()
+                }
+            }
+        }
     }
 }
 
@@ -330,6 +339,43 @@ fun TimerScreen(timerViewModel: TimerViewModel = viewModel()) {
             true -> TimerRunningScreen()
             false -> TimerInputScreen()
         }
+    }
+}
+
+@Composable
+fun FinishTextArea(timerViewModel: TimerViewModel = viewModel()) {
+    val timerValue: String by timerViewModel.timerValue.observeAsState(initial = "00 : 00 : 00")
+    Column(modifier = Modifier
+        .fillMaxWidth()
+        .background(color = MaterialTheme.colors.background)
+        .padding(16.dp), horizontalAlignment = Alignment.CenterHorizontally) {
+
+        Text(text = "Finished", style = MaterialTheme.typography.h4.copy(fontFamily = FiraSans, fontSize = 64.sp, fontWeight = FontWeight.Medium, color = purple500))
+        Text(text = timerValue, style = MaterialTheme.typography.caption.copy(fontFamily = FiraSans, fontSize = 18.sp, fontWeight = FontWeight.SemiBold, color = MaterialTheme.colors.onBackground, letterSpacing = 4.sp))
+
+    }
+}
+
+@ExperimentalAnimationApi
+@Composable
+fun TimerFinishAction(timerViewModel: TimerViewModel = viewModel()) {
+    val isTimerFinished: Boolean by timerViewModel.isTimerFinished.observeAsState(initial = false)
+    AnimatedVisibility(visible = isTimerFinished, enter = fadeIn(), exit = fadeOut()) {
+        FloatingActionButton(onClick = { timerViewModel.resetTimerValues() }, modifier = Modifier.padding(4.dp)) {
+            Icon(imageVector = Icons.Default.Refresh, contentDescription = "refresh")
+        }
+    }
+}
+
+@ExperimentalAnimationApi
+@Composable
+fun TimerFinishScreen() {
+    Column(horizontalAlignment = Alignment.CenterHorizontally) {
+        FinishTextArea()
+        Spacer(modifier = Modifier.height(30.dp))
+        Divider()
+        Spacer(modifier = Modifier.height(50.dp))
+        TimerFinishAction()
     }
 }
 
