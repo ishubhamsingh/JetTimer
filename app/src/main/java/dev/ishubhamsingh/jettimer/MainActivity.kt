@@ -21,7 +21,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
-import dev.ishubhamsingh.jettimer.ui.components.TimerInputScreen
 import dev.ishubhamsingh.jettimer.ui.components.TimerScreen
 import dev.ishubhamsingh.jettimer.ui.theme.MyTheme
 

@@ -1,3 +1,18 @@
+/*
+ * Copyright 2021 The Android Open Source Project
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     https://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package dev.ishubhamsingh.jettimer.ui.components
 
 import androidx.compose.animation.AnimatedVisibility
@@ -60,25 +75,28 @@ fun TimerDisplay(timerViewModel: TimerViewModel = viewModel()) {
     val second: String by timerViewModel.secValue.observeAsState(initial = "00")
     val isValid: Boolean by timerViewModel.isValidInput.observeAsState(false)
 
-    val textColor by animateColorAsState(if(isValid) purple500 else MaterialTheme.colors.onBackground)
+    val textColor by animateColorAsState(if (isValid) purple500 else MaterialTheme.colors.onBackground)
 
-    Row(horizontalArrangement = Arrangement.SpaceEvenly, modifier = Modifier
-        .fillMaxWidth()
-        .background(color = MaterialTheme.colors.background)
-        .padding(16.dp)) {
-       Column(horizontalAlignment = Alignment.CenterHorizontally) {
-           Text(text = hour, style = MaterialTheme.typography.h4.copy(fontFamily = FiraSans, fontSize = 64.sp, fontWeight = FontWeight.Medium, color = textColor))
-           Text(text = "Hours",style = MaterialTheme.typography.caption.copy(fontFamily = FiraSans, fontSize = 16.sp, fontWeight = FontWeight.SemiBold, color = textColor))
-       }
+    Row(
+        horizontalArrangement = Arrangement.SpaceEvenly,
+        modifier = Modifier
+            .fillMaxWidth()
+            .background(color = MaterialTheme.colors.background)
+            .padding(16.dp)
+    ) {
+        Column(horizontalAlignment = Alignment.CenterHorizontally) {
+            Text(text = hour, style = MaterialTheme.typography.h4.copy(fontFamily = FiraSans, fontSize = 64.sp, fontWeight = FontWeight.Medium, color = textColor))
+            Text(text = "Hours", style = MaterialTheme.typography.caption.copy(fontFamily = FiraSans, fontSize = 16.sp, fontWeight = FontWeight.SemiBold, color = textColor))
+        }
         Text(text = ":", style = MaterialTheme.typography.h4.copy(fontFamily = FiraSans, fontSize = 64.sp, fontWeight = FontWeight.Medium, color = textColor))
-       Column(horizontalAlignment = Alignment.CenterHorizontally) {
-           Text(text = minute, style = MaterialTheme.typography.h4.copy(fontFamily = FiraSans, fontSize = 64.sp, fontWeight = FontWeight.Medium, color = textColor))
-           Text(text = "Minutes",style = MaterialTheme.typography.caption.copy(fontFamily = FiraSans, fontSize = 16.sp, fontWeight = FontWeight.SemiBold, color = textColor))
-       }
+        Column(horizontalAlignment = Alignment.CenterHorizontally) {
+            Text(text = minute, style = MaterialTheme.typography.h4.copy(fontFamily = FiraSans, fontSize = 64.sp, fontWeight = FontWeight.Medium, color = textColor))
+            Text(text = "Minutes", style = MaterialTheme.typography.caption.copy(fontFamily = FiraSans, fontSize = 16.sp, fontWeight = FontWeight.SemiBold, color = textColor))
+        }
         Text(text = ":", style = MaterialTheme.typography.h4.copy(fontFamily = FiraSans, fontSize = 64.sp, fontWeight = FontWeight.Medium, color = textColor))
         Column(horizontalAlignment = Alignment.CenterHorizontally) {
             Text(text = second, style = MaterialTheme.typography.h4.copy(fontFamily = FiraSans, fontSize = 64.sp, fontWeight = FontWeight.Medium, color = textColor))
-            Text(text = "Seconds",style = MaterialTheme.typography.caption.copy(fontFamily = FiraSans, fontSize = 16.sp, fontWeight = FontWeight.SemiBold, color = textColor))
+            Text(text = "Seconds", style = MaterialTheme.typography.caption.copy(fontFamily = FiraSans, fontSize = 16.sp, fontWeight = FontWeight.SemiBold, color = textColor))
         }
     }
 }
@@ -96,130 +114,172 @@ fun NumPad(timerViewModel: TimerViewModel = viewModel()) {
         verticalAlignment = Alignment.Top,
         horizontalArrangement = Arrangement.SpaceEvenly
     ) {
-        Column(verticalArrangement = Arrangement.spacedBy(16.dp), ) {
-            Box(modifier = Modifier
-                .clip(CircleShape)
-                .background(color = bgColor)
-                .size(78.dp)
-                .clickable { timerViewModel.setTimerValue(1) }, contentAlignment = Alignment.Center) {
+        Column(verticalArrangement = Arrangement.spacedBy(16.dp),) {
+            Box(
+                modifier = Modifier
+                    .clip(CircleShape)
+                    .background(color = bgColor)
+                    .size(78.dp)
+                    .clickable { timerViewModel.setTimerValue(1) },
+                contentAlignment = Alignment.Center
+            ) {
                 Text(
                     text = "1",
                     style = MaterialTheme.typography.h3.copy(fontFamily = FiraSans),
-                    modifier = Modifier.padding(8.dp),color = textColor)
+                    modifier = Modifier.padding(8.dp), color = textColor
+                )
             }
-            Box(modifier = Modifier
-                .clip(CircleShape)
-                .background(color = bgColor)
-                .size(78.dp)
-                .clickable { timerViewModel.setTimerValue(4) }, contentAlignment = Alignment.Center) {
+            Box(
+                modifier = Modifier
+                    .clip(CircleShape)
+                    .background(color = bgColor)
+                    .size(78.dp)
+                    .clickable { timerViewModel.setTimerValue(4) },
+                contentAlignment = Alignment.Center
+            ) {
                 Text(
                     text = "4",
                     style = MaterialTheme.typography.h3.copy(fontFamily = FiraSans),
-                    modifier = Modifier.padding(8.dp), color = textColor)
+                    modifier = Modifier.padding(8.dp), color = textColor
+                )
             }
-            Box(modifier = Modifier
-                .clip(CircleShape)
-                .background(color = bgColor)
-                .size(78.dp)
-                .clickable { timerViewModel.setTimerValue(7) }, contentAlignment = Alignment.Center) {
+            Box(
+                modifier = Modifier
+                    .clip(CircleShape)
+                    .background(color = bgColor)
+                    .size(78.dp)
+                    .clickable { timerViewModel.setTimerValue(7) },
+                contentAlignment = Alignment.Center
+            ) {
                 Text(
                     text = "7",
                     style = MaterialTheme.typography.h3.copy(fontFamily = FiraSans),
-                    modifier = Modifier.padding(8.dp), color = textColor)
+                    modifier = Modifier.padding(8.dp), color = textColor
+                )
             }
         }
 
         Column(verticalArrangement = Arrangement.spacedBy(16.dp),) {
-            Box(modifier = Modifier
-                .clip(CircleShape)
-                .background(color = bgColor)
-                .size(78.dp)
-                .clickable { timerViewModel.setTimerValue(2) }, contentAlignment = Alignment.Center) {
+            Box(
+                modifier = Modifier
+                    .clip(CircleShape)
+                    .background(color = bgColor)
+                    .size(78.dp)
+                    .clickable { timerViewModel.setTimerValue(2) },
+                contentAlignment = Alignment.Center
+            ) {
                 Text(
                     text = "2",
                     style = MaterialTheme.typography.h3.copy(fontFamily = FiraSans),
-                    modifier = Modifier.padding(8.dp), color = textColor)
+                    modifier = Modifier.padding(8.dp), color = textColor
+                )
             }
-            Box(modifier = Modifier
-                .clip(CircleShape)
-                .background(color = bgColor)
-                .size(78.dp)
-                .clickable { timerViewModel.setTimerValue(5) }, contentAlignment = Alignment.Center) {
+            Box(
+                modifier = Modifier
+                    .clip(CircleShape)
+                    .background(color = bgColor)
+                    .size(78.dp)
+                    .clickable { timerViewModel.setTimerValue(5) },
+                contentAlignment = Alignment.Center
+            ) {
                 Text(
                     text = "5",
                     style = MaterialTheme.typography.h3.copy(fontFamily = FiraSans),
-                    modifier = Modifier.padding(8.dp),color = textColor)
+                    modifier = Modifier.padding(8.dp), color = textColor
+                )
             }
-            Box(modifier = Modifier
-                .clip(CircleShape)
-                .background(color = bgColor)
-                .size(78.dp)
-                .clickable { timerViewModel.setTimerValue(8) }, contentAlignment = Alignment.Center) {
+            Box(
+                modifier = Modifier
+                    .clip(CircleShape)
+                    .background(color = bgColor)
+                    .size(78.dp)
+                    .clickable { timerViewModel.setTimerValue(8) },
+                contentAlignment = Alignment.Center
+            ) {
                 Text(
                     text = "8",
                     style = MaterialTheme.typography.h3.copy(fontFamily = FiraSans),
-                    modifier = Modifier.padding(8.dp),color = textColor)
+                    modifier = Modifier.padding(8.dp), color = textColor
+                )
             }
-            Box(modifier = Modifier
-                .clip(CircleShape)
-                .background(color = bgColor)
-                .size(78.dp)
-                .clickable { timerViewModel.setTimerValue(0) }, contentAlignment = Alignment.Center) {
+            Box(
+                modifier = Modifier
+                    .clip(CircleShape)
+                    .background(color = bgColor)
+                    .size(78.dp)
+                    .clickable { timerViewModel.setTimerValue(0) },
+                contentAlignment = Alignment.Center
+            ) {
                 Text(
                     text = "0",
                     style = MaterialTheme.typography.h3.copy(fontFamily = FiraSans),
-                    modifier = Modifier.padding(8.dp),color = textColor)
+                    modifier = Modifier.padding(8.dp), color = textColor
+                )
             }
         }
 
         Column(verticalArrangement = Arrangement.spacedBy(16.dp)) {
-            Box(modifier = Modifier
-                .clip(CircleShape)
-                .background(color = bgColor)
-                .size(78.dp)
-                .clickable { timerViewModel.setTimerValue(3) }, contentAlignment = Alignment.Center) {
-                Text(
-                    text = "3",
-                    style = MaterialTheme.typography.h3.copy(fontFamily = FiraSans),
-                    modifier = Modifier.padding(8.dp),color = textColor)
-            }
-            Box(modifier = Modifier
-                .clip(CircleShape)
-                .background(color = bgColor)
-                .size(78.dp)
-                .clickable { timerViewModel.setTimerValue(6) }, contentAlignment = Alignment.Center) {
-                Text(
-                    text = "6",
-                    style = MaterialTheme.typography.h3.copy(fontFamily = FiraSans),
-                    modifier = Modifier.padding(8.dp),color = textColor)
-            }
-            Box(modifier = Modifier
-                .clip(CircleShape)
-                .background(color = bgColor)
-                .size(78.dp)
-                .clickable { timerViewModel.setTimerValue(9) }, contentAlignment = Alignment.Center) {
-                Text(
-                    text = "9",
-                    style = MaterialTheme.typography.h3.copy(fontFamily = FiraSans),
-                    modifier = Modifier.padding(8.dp),color = textColor)
-            }
-
-            AnimatedVisibility(visible = isValidInput,enter = slideInHorizontally(), exit = slideOutHorizontally()) {
-                Box(modifier = Modifier
+            Box(
+                modifier = Modifier
                     .clip(CircleShape)
                     .background(color = bgColor)
                     .size(78.dp)
-                    .clickable { timerViewModel.deleteTimerValue() }, contentAlignment = Alignment.Center) {
+                    .clickable { timerViewModel.setTimerValue(3) },
+                contentAlignment = Alignment.Center
+            ) {
+                Text(
+                    text = "3",
+                    style = MaterialTheme.typography.h3.copy(fontFamily = FiraSans),
+                    modifier = Modifier.padding(8.dp), color = textColor
+                )
+            }
+            Box(
+                modifier = Modifier
+                    .clip(CircleShape)
+                    .background(color = bgColor)
+                    .size(78.dp)
+                    .clickable { timerViewModel.setTimerValue(6) },
+                contentAlignment = Alignment.Center
+            ) {
+                Text(
+                    text = "6",
+                    style = MaterialTheme.typography.h3.copy(fontFamily = FiraSans),
+                    modifier = Modifier.padding(8.dp), color = textColor
+                )
+            }
+            Box(
+                modifier = Modifier
+                    .clip(CircleShape)
+                    .background(color = bgColor)
+                    .size(78.dp)
+                    .clickable { timerViewModel.setTimerValue(9) },
+                contentAlignment = Alignment.Center
+            ) {
+                Text(
+                    text = "9",
+                    style = MaterialTheme.typography.h3.copy(fontFamily = FiraSans),
+                    modifier = Modifier.padding(8.dp), color = textColor
+                )
+            }
+
+            AnimatedVisibility(visible = isValidInput, enter = slideInHorizontally(), exit = slideOutHorizontally()) {
+                Box(
+                    modifier = Modifier
+                        .clip(CircleShape)
+                        .background(color = bgColor)
+                        .size(78.dp)
+                        .clickable { timerViewModel.deleteTimerValue() },
+                    contentAlignment = Alignment.Center
+                ) {
                     Icon(
                         imageVector = Icons.Outlined.Backspace,
                         contentDescription = "clear",
                         modifier = Modifier.padding(8.dp),
                         tint = textColor
-                            )
+                    )
                 }
             }
         }
-
     }
 }
 
@@ -233,7 +293,6 @@ fun TimerButton(timerViewModel: TimerViewModel = viewModel()) {
         }
     }
 }
-
 
 @ExperimentalAnimationApi
 @Composable
@@ -256,28 +315,30 @@ fun TimerProgress(timerViewModel: TimerViewModel = viewModel()) {
     val second: String by timerViewModel.timerSec.observeAsState(initial = "00")
     val isValid: Boolean by timerViewModel.isValidInput.observeAsState(false)
 
-    val textColor by animateColorAsState(if(isValid) purple500 else MaterialTheme.colors.onBackground)
+    val textColor by animateColorAsState(if (isValid) purple500 else MaterialTheme.colors.onBackground)
 
-    Row(horizontalArrangement = Arrangement.SpaceEvenly, modifier = Modifier
-        .fillMaxWidth()
-        .background(color = MaterialTheme.colors.background)
-        .padding(16.dp)) {
+    Row(
+        horizontalArrangement = Arrangement.SpaceEvenly,
+        modifier = Modifier
+            .fillMaxWidth()
+            .background(color = MaterialTheme.colors.background)
+            .padding(16.dp)
+    ) {
         Column(horizontalAlignment = Alignment.CenterHorizontally) {
             Text(text = hour, style = MaterialTheme.typography.h4.copy(fontFamily = FiraSans, fontSize = 64.sp, fontWeight = FontWeight.Medium, color = textColor))
-            Text(text = "Hours",style = MaterialTheme.typography.caption.copy(fontFamily = FiraSans, fontSize = 16.sp, fontWeight = FontWeight.SemiBold, color = textColor))
+            Text(text = "Hours", style = MaterialTheme.typography.caption.copy(fontFamily = FiraSans, fontSize = 16.sp, fontWeight = FontWeight.SemiBold, color = textColor))
         }
         Text(text = ":", style = MaterialTheme.typography.h4.copy(fontFamily = FiraSans, fontSize = 64.sp, fontWeight = FontWeight.Medium, color = textColor))
         Column(horizontalAlignment = Alignment.CenterHorizontally) {
             Text(text = minute, style = MaterialTheme.typography.h4.copy(fontFamily = FiraSans, fontSize = 64.sp, fontWeight = FontWeight.Medium, color = textColor))
-            Text(text = "Minutes",style = MaterialTheme.typography.caption.copy(fontFamily = FiraSans, fontSize = 16.sp, fontWeight = FontWeight.SemiBold, color = textColor))
+            Text(text = "Minutes", style = MaterialTheme.typography.caption.copy(fontFamily = FiraSans, fontSize = 16.sp, fontWeight = FontWeight.SemiBold, color = textColor))
         }
         Text(text = ":", style = MaterialTheme.typography.h4.copy(fontFamily = FiraSans, fontSize = 64.sp, fontWeight = FontWeight.Medium, color = textColor))
         Column(horizontalAlignment = Alignment.CenterHorizontally) {
             Text(text = second, style = MaterialTheme.typography.h4.copy(fontFamily = FiraSans, fontSize = 64.sp, fontWeight = FontWeight.Medium, color = textColor))
-            Text(text = "Seconds",style = MaterialTheme.typography.caption.copy(fontFamily = FiraSans, fontSize = 16.sp, fontWeight = FontWeight.SemiBold, color = textColor))
+            Text(text = "Seconds", style = MaterialTheme.typography.caption.copy(fontFamily = FiraSans, fontSize = 16.sp, fontWeight = FontWeight.SemiBold, color = textColor))
         }
     }
-
 }
 
 @ExperimentalAnimationApi
@@ -296,7 +357,7 @@ fun TimerRunningActions(timerViewModel: TimerViewModel = viewModel()) {
 fun TimerRunningScreen(timerViewModel: TimerViewModel = viewModel()) {
     val isTimerFinished: Boolean by timerViewModel.isTimerFinished.observeAsState(initial = false)
     Crossfade(targetState = isTimerFinished) { timerFinishStatus ->
-        when(timerFinishStatus) {
+        when (timerFinishStatus) {
             true -> TimerFinishScreen()
             false -> {
                 Column(horizontalAlignment = Alignment.CenterHorizontally) {
@@ -316,7 +377,7 @@ fun TimerRunningScreen(timerViewModel: TimerViewModel = viewModel()) {
 fun TimerScreen(timerViewModel: TimerViewModel = viewModel()) {
     val isTimerRunning: Boolean by timerViewModel.isTimerRunning.observeAsState(initial = false)
     Crossfade(targetState = isTimerRunning) { timerRunning ->
-        when(timerRunning) {
+        when (timerRunning) {
             true -> TimerRunningScreen()
             false -> TimerInputScreen()
         }
@@ -336,14 +397,16 @@ fun FinishTextArea(timerViewModel: TimerViewModel = viewModel()) {
     )
 
     val timerValue: String by timerViewModel.timerValue.observeAsState(initial = "00 : 00 : 00")
-    Column(modifier = Modifier
-        .fillMaxWidth()
-        .background(color = MaterialTheme.colors.background)
-        .padding(16.dp), horizontalAlignment = Alignment.CenterHorizontally) {
+    Column(
+        modifier = Modifier
+            .fillMaxWidth()
+            .background(color = MaterialTheme.colors.background)
+            .padding(16.dp),
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
 
         Text(text = "Finished", style = MaterialTheme.typography.h4.copy(fontFamily = FiraSans, fontSize = 64.sp, fontWeight = FontWeight.Medium, color = purple500.copy(alpha = textOpacity)))
         Text(text = timerValue, style = MaterialTheme.typography.caption.copy(fontFamily = FiraSans, fontSize = 18.sp, fontWeight = FontWeight.SemiBold, color = MaterialTheme.colors.onBackground, letterSpacing = 4.sp))
-
     }
 }
 
