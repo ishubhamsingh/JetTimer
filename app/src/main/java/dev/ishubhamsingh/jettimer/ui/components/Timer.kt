@@ -4,20 +4,16 @@ import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.Crossfade
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.animation.animateColorAsState
-import androidx.compose.animation.expandIn
-import androidx.compose.animation.expandVertically
+import androidx.compose.animation.core.LinearEasing
+import androidx.compose.animation.core.RepeatMode
+import androidx.compose.animation.core.animateFloat
+import androidx.compose.animation.core.infiniteRepeatable
+import androidx.compose.animation.core.rememberInfiniteTransition
+import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
-import androidx.compose.animation.shrinkHorizontally
-import androidx.compose.animation.shrinkOut
-import androidx.compose.animation.shrinkVertically
-import androidx.compose.animation.slideIn
 import androidx.compose.animation.slideInHorizontally
-import androidx.compose.animation.slideInVertically
-import androidx.compose.animation.slideOut
 import androidx.compose.animation.slideOutHorizontally
-import androidx.compose.animation.slideOutVertically
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -29,47 +25,32 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.layout.wrapContentHeight
-import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Divider
 import androidx.compose.material.FloatingActionButton
 import androidx.compose.material.Icon
 import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.PlayArrow
 import androidx.compose.material.icons.filled.Refresh
 import androidx.compose.material.icons.filled.Stop
 import androidx.compose.material.icons.outlined.Backspace
-import androidx.compose.material.icons.outlined.PlayCircle
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.composed
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
-import androidx.compose.ui.text.SpanStyle
-import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import dev.ishubhamsingh.jettimer.R
 import dev.ishubhamsingh.jettimer.ui.theme.FiraSans
-import dev.ishubhamsingh.jettimer.ui.theme.purple200
 import dev.ishubhamsingh.jettimer.ui.theme.purple500
-import dev.ishubhamsingh.jettimer.ui.theme.purple700
-import dev.ishubhamsingh.jettimer.ui.theme.teal200
 import dev.ishubhamsingh.jettimer.ui.viewmodel.TimerViewModel
 
 @Composable
@@ -344,13 +325,23 @@ fun TimerScreen(timerViewModel: TimerViewModel = viewModel()) {
 
 @Composable
 fun FinishTextArea(timerViewModel: TimerViewModel = viewModel()) {
+    val infiniteTransition = rememberInfiniteTransition()
+    val textOpacity by infiniteTransition.animateFloat(
+        initialValue = 0f,
+        targetValue = 1f,
+        animationSpec = infiniteRepeatable(
+            animation = tween(delayMillis = 200, easing = LinearEasing),
+            repeatMode = RepeatMode.Reverse
+        )
+    )
+
     val timerValue: String by timerViewModel.timerValue.observeAsState(initial = "00 : 00 : 00")
     Column(modifier = Modifier
         .fillMaxWidth()
         .background(color = MaterialTheme.colors.background)
         .padding(16.dp), horizontalAlignment = Alignment.CenterHorizontally) {
 
-        Text(text = "Finished", style = MaterialTheme.typography.h4.copy(fontFamily = FiraSans, fontSize = 64.sp, fontWeight = FontWeight.Medium, color = purple500))
+        Text(text = "Finished", style = MaterialTheme.typography.h4.copy(fontFamily = FiraSans, fontSize = 64.sp, fontWeight = FontWeight.Medium, color = purple500.copy(alpha = textOpacity)))
         Text(text = timerValue, style = MaterialTheme.typography.caption.copy(fontFamily = FiraSans, fontSize = 18.sp, fontWeight = FontWeight.SemiBold, color = MaterialTheme.colors.onBackground, letterSpacing = 4.sp))
 
     }
